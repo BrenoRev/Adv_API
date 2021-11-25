@@ -24,11 +24,11 @@ public class Processos implements Serializable{
 	@OneToOne(mappedBy = "processos")
 	private Informacoes informacoes;
 	
-	@NotBlank
-	@NotNull
+	@NotBlank(message = "Descrição não pode ser vázia")
+	@NotNull(message = "Descrição não pode ser nula")
 	private String descricao;
 	
-	@NotBlank
-	@NotNull
+	@NotBlank(message = "Resultado não pode ser vázio")
+	@NotNull(message = "Resultado não pode ser nulo")
 	private int resultado;
 }
