@@ -9,7 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.adv.entities.Advogado;
 import com.dev.adv.entities.Especialidades;
@@ -27,8 +28,13 @@ import com.dev.adv.repositories.EspecialidadeRepository;
 import com.dev.adv.repositories.InformacaoRepository;
 import com.dev.adv.repositories.ProcessoRepository;
 
-@Controller 
-@RequestMapping(value = "advogados")
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@RestController 
+@Api(value = "API Advogados")
+@CrossOrigin(origins = "*")
+@RequestMapping(value = "/advogados")
 public class IndexController {
 
 	@Autowired
@@ -44,6 +50,7 @@ public class IndexController {
 	private ProcessoRepository processoRepository;
 	
 	@GetMapping("/")
+	@ApiOperation(value = "Retorna todos os advogados")
 	public ResponseEntity<List<Advogado>> findAll(){
 		
 		// Busca uma lista de usuarios e seta os processos, informações e especialidades
@@ -69,6 +76,7 @@ public class IndexController {
 	}
 	
 	@GetMapping("/{id}")
+	@ApiOperation(value = "Retorna um advogado por id")
 	public ResponseEntity<Advogado> findById(@PathVariable("id") Long id){
 		
 		// Busca um usuario e seta os processos, informações e especialidades
@@ -89,12 +97,14 @@ public class IndexController {
 		return ResponseEntity.ok(advogado);
 	}
 	 
+	@ApiOperation(value = "Cria um novo advogado")
 	@PostMapping("/")
 	public ResponseEntity<String> register(@Valid @RequestBody Advogado advogado){
 		advogadoRepository.save(advogado);		 
 		return ResponseEntity.ok("Usuario " + advogado.getId() + " Salvo com sucesso!");
 	}
 	
+	@ApiOperation(value = "Cria uma nova informação que se relaciona com o advogado do id passada como parametro")
 	@PostMapping("/informacoes/{id}")
 	public ResponseEntity<String> registerInfo(@PathVariable("id") Long id, @RequestBody Informacoes informacoes) throws InterruptedException{
 		
@@ -150,7 +160,7 @@ public class IndexController {
 	}
 	
 	// Atualizar um advogado
-	
+	@ApiOperation(value = "Atualiza um advogado por id")
 	@PutMapping("/{id}")
 	public ResponseEntity<String> update(@Valid @RequestBody Advogado advogado, @PathVariable("id") Long id){
 		advogado.setId(id);
@@ -161,6 +171,7 @@ public class IndexController {
 	// Atualizar uma informação do advogado
 	
 	@PutMapping("/informacoes/{id}")
+	@ApiOperation(value = "Atualiza uma informação de um advogado pro id")
 	public ResponseEntity<String> updateInformacoes(@Valid @RequestBody Informacoes informacoes, @PathVariable("id") Long id){
 		informacoes.setId(id);
 		informacaoRepository.save(informacoes);
@@ -168,7 +179,7 @@ public class IndexController {
 	}
 	
 	// Deletar um advogado e suas informações
-	
+	@ApiOperation(value = "Delete um advogado e suas informações")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable("id") Long id){
 		advogadoRepository.deleteById(id);
