@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "API Advogados")
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/advogados")
-public class IndexController {
+public class AdvogadoController {
 
 	@Autowired
 	private AdvogadoRepository advogadoRepository;
@@ -106,7 +106,7 @@ public class IndexController {
 	
 	@ApiOperation(value = "Cria uma nova informação que se relaciona com o advogado do id passada como parametro")
 	@PostMapping("/informacoes/{id}")
-	public ResponseEntity<String> registerInfo(@PathVariable("id") Long id, @RequestBody Informacoes informacoes) throws InterruptedException{
+	public ResponseEntity<String> registerInfo(@PathVariable("id") Long id, @Valid @RequestBody Informacoes informacoes) throws InterruptedException{
 		
 		if(informacaoRepository.exist(id) != 0) {
 			return ResponseEntity.ok("Já existe um documento vinculado a esse advogado");
