@@ -14,4 +14,10 @@ public interface ProcessoRepository extends JpaRepository<Processos, Long>{
 	@Query(value = "select  * from processos left join informacoes on informacoes.id = processos.info_id where informacoes.advogado_id = ?1", nativeQuery = true)
 	List<Processos> getProcessos(Long id);
 	
+	@Query(value = "select COUNT(resultado) from processos left join informacoes on informacoes.id = processos.info_id where informacoes.advogado_id = ?1 and processos.resultado = 1;", nativeQuery= true)
+	int win(Long id);
+	
+	@Query(value = "select COUNT(resultado) from processos left join informacoes on informacoes.id = processos.info_id where informacoes.advogado_id = ?1 and processos.resultado = 0;", nativeQuery= true)
+	int lose(Long id);
+	
 }

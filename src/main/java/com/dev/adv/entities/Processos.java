@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,8 +30,10 @@ public class Processos implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Informacoes informacoes;
 	
+	@NotNull(message= "A descrição não pode ser nula")
 	private String descricao;
 	
+	@NotNull(message= "O resultado do processo não pode ser nulo")
 	private int resultado;
 	
 	@Column(name = "info_Id")

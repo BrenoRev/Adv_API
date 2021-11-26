@@ -54,7 +54,6 @@ public class Advogado implements Serializable{
 
 	@NotEmpty(message = "O numero da conta bancaria não pode ser vázia")
 	private String contaBancaria;
-	
 
 	@Range(min=1,max=999999,message="Máximo de 6 caracteres")
 	private int agencia;

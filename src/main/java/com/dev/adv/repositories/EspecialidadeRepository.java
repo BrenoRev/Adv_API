@@ -24,5 +24,5 @@ public interface EspecialidadeRepository extends JpaRepository<Especialidades, L
 	
 	@Query(value = "select * from especialidades right join informacoes on informacoes.id = especialidades.info_id where informacoes.advogado_id = ?1", nativeQuery = true)
 	List<Especialidades> getEspecialidades(Long id);
-	
+
 }

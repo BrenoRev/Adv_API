@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,6 +26,7 @@ public class Especialidades implements Serializable{
 	@Id
 	private Long id;
 	
+	@NotNull(message= "A área de atuação não pode ser nula")
 	private String areaAtuacao;
 
 	@JsonIgnore
